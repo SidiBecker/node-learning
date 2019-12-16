@@ -1,7 +1,16 @@
-const express = require('express');
-const app = express();
+var express = require('express');
+var consign = require('consign');
+var bodyParser = require('body-parser');
 
-const routes = require('../app/routes/routes');
-routes(app);
+module.exports = function () {
+    var app = express();
 
-module.exports = app;
+    //app.use(bodyParser.urlencoded({extended: true}));
+    app.use(bodyParser.json());
+
+    consign()
+        .include('./src/app/controllers')
+        .into(app);
+
+    return app;
+}
